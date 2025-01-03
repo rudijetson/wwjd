@@ -1,5 +1,15 @@
+import { Metadata } from 'next'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/app/components/ui/card"
 import { Cross, Heart, Shield } from "lucide-react"
+
+export const metadata: Metadata = {
+  title: 'About WWJD | Biblical Guidance Platform',
+  description: 'Learn how WWJD helps you find biblical wisdom and guidance for modern challenges. Join our Christian community for prayer support and spiritual growth.',
+  openGraph: {
+    title: 'About WWJD | Biblical Guidance Platform',
+    description: 'Learn how WWJD helps you find biblical wisdom and guidance for modern challenges.',
+  }
+}
 
 export default function AboutPage() {
   return (
