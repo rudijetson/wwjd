@@ -11,16 +11,18 @@ import {
   DialogTrigger,
 } from "@/app/components/ui/dialog"
 import { Textarea } from "@/app/components/ui/textarea"
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/app/components/ui/select"
 import { PRAYER_TYPES, type PrayerType } from '../constants/prayer-types'
 import { Heart, Loader2 } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
+
+const PRAYER_TYPE_COLORS: Record<PrayerType, string> = {
+  praise: "bg-amber-500 hover:bg-amber-400",
+  gratitude: "bg-emerald-500 hover:bg-emerald-400",
+  support: "bg-sky-500 hover:bg-sky-400",
+  testimony: "bg-violet-500 hover:bg-violet-400",
+  encouragement: "bg-rose-500 hover:bg-rose-400",
+  general: "bg-orange-500 hover:bg-orange-400"
+}
 
 interface SharePrayerDialogProps {
   onPrayerSubmit: (prayer: { type: string; content: string }) => void
@@ -63,27 +65,29 @@ export function SharePrayerDialog({ onPrayerSubmit }: SharePrayerDialogProps) {
       </DialogTrigger>
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
-          <DialogTitle>Share a Prayer</DialogTitle>
+          <DialogTitle>Share Your Prayer</DialogTitle>
           <DialogDescription>
-            Share your prayer with the community. Your words may bring comfort and strength to others.
+            Select a type of prayer below and share your heart with the community
           </DialogDescription>
         </DialogHeader>
-        <div className="space-y-4 pt-4">
-          <Select
-            value={selectedType}
-            onValueChange={setSelectedType}
-          >
-            <SelectTrigger>
-              <SelectValue placeholder="Select prayer type" />
-            </SelectTrigger>
-            <SelectContent>
-              {Object.entries(PRAYER_TYPES).map(([value, label]) => (
-                <SelectItem key={value} value={value}>
-                  {label}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+        <div className="space-y-6 pt-4">
+          <div className="grid grid-cols-2 gap-2">
+            {Object.entries(PRAYER_TYPES).map(([type, label]) => (
+              <Button
+                key={type}
+                variant="ghost"
+                className={`
+                  h-auto py-3 px-4 flex flex-col items-center justify-center gap-1 transition-all duration-300
+                  ${PRAYER_TYPE_COLORS[type as PrayerType]}
+                  ${selectedType === type ? 'ring-2 ring-white/20 shadow-lg scale-105' : ''}
+                  text-white hover:scale-105
+                `}
+                onClick={() => setSelectedType(type as PrayerType)}
+              >
+                <span className="text-sm font-medium">{label}</span>
+              </Button>
+            ))}
+          </div>
 
           <AnimatePresence>
             {selectedType && (
@@ -95,7 +99,7 @@ export function SharePrayerDialog({ onPrayerSubmit }: SharePrayerDialogProps) {
                 <Textarea
                   value={prayer}
                   onChange={(e) => setPrayer(e.target.value)}
-                  placeholder={PRAYER_TYPES[selectedType as keyof typeof PRAYER_TYPES]}
+                  placeholder={PRAYER_TYPES[selectedType]}
                   className="min-h-[150px] resize-none"
                 />
               </motion.div>
