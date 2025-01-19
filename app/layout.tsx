@@ -2,12 +2,22 @@ import type { Metadata } from 'next'
 import './globals.css'
 import { Toaster } from "@/app/components/ui/toaster"
 import { Nav } from "@/app/components/nav"
+import { Footer } from "@/app/components/footer"
 
 export const metadata: Metadata = {
   title: 'WWJD - What Would Jesus Do? | Biblical Guidance for Modern Life',
   description: 'Get divine guidance through scripture for your daily challenges. WWJD helps you find biblical wisdom and share prayers with a supportive Christian community.',
   keywords: 'WWJD, What Would Jesus Do, Bible guidance, Christian community, prayer wall, scripture guidance, biblical wisdom, Christian advice, spiritual guidance',
   authors: [{ name: 'WWJD Community' }],
+  icons: {
+    icon: '/favicon.svg',
+    shortcut: '/favicon.svg',
+    apple: '/favicon.svg',
+    other: {
+      rel: 'apple-touch-icon-precomposed',
+      url: '/favicon.svg',
+    },
+  },
   openGraph: {
     type: 'website',
     title: 'WWJD - What Would Jesus Do?',
@@ -46,6 +56,7 @@ export default function RootLayout({
       <body>
         <Nav />
         <main className="min-h-[calc(100vh-3.5rem)] pt-6">{children}</main>
+        <Footer />
         <div id="dialog-root" />
         <Toaster />
       </body>
